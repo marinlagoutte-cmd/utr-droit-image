@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
+<link rel="icon" href="data:,">
 <title>Droit à l'image · Ultra Tour de la Ria</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- media="print" puis "all" : la police de la marque arrive sans retarder l'affichage (Arial en attendant) -->
@@ -446,13 +447,19 @@ async function remplir(v) {
 }
 
 // --- Enregistrement ---
-async function envoyer(d) {
+async function envoyer(d, essai = 1) {
   const coupure = new AbortController(), minuteur = setTimeout(() => coupure.abort(), 90000); // réseau figé : on rend la main
   try {
     // Corps en texte simple : la requête part sans vérification préalable (CORS) et sans compte Google
     const r = await (await fetch(API, { method: 'POST', body: JSON.stringify(d), signal: coupure.signal })).json();
     if (!r.ok) throw Object.assign(new Error(r.erreur), { refus: true });
     return r.nom;
+  } catch (err) {
+    // Raté bref du réseau (ni refus, ni délai dépassé) : un second essai avant d'alerter la personne.
+    // Au pire le Drive reçoit deux fois le même PDF, sous deux noms.
+    if (essai > 1 || err.refus || coupure.signal.aborted) throw err;
+    await new Promise(ok => setTimeout(ok, 1500));
+    return envoyer(d, 2);
   } finally {
     clearTimeout(minuteur);
   }
