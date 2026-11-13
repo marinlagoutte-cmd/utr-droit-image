@@ -122,6 +122,7 @@
         <label class="champ">Date de naissance<input type="date" name="naissance" required></label>
         <label class="champ">Téléphone <small data-pour="Mineur">(facultatif)</small><input type="tel" name="tel" autocomplete="tel"></label>
       </div>
+      <label class="champ">Adresse <small>(facultatif)</small><input type="text" name="adresse" autocomplete="street-address"></label>
       <label class="champ">E-mail <small data-pour="Mineur">(facultatif)</small><input type="email" name="email" autocomplete="email"></label>
       <p class="note" data-pour="Mineur">La personne photographiée étant mineure, l'autorisation est signée par ses représentants légaux (partie 8).</p>
 
@@ -425,6 +426,7 @@ async function remplir(v) {
   ecrire(p1, v.prenom, 374, 449.6 + d, 168);
   ecrire(p1, v.naissance.split('-').reverse().join('/'), 152, 430.1 + d, 140);
   ecrire(p1, v.tel, 374, 430.1 + d, 168);
+  ecrire(p1, v.adresse, 152, 410.6 + d, 390);
   ecrire(p1, v.email, 152, 391.1 + d, 390);
 
   centrer(p2, jj, 189.7, P.date); centrer(p2, mm, 220, P.date); centrer(p2, aaaa, 261.6, P.date);
