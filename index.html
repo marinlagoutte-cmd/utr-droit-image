@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Droit à l'image · Ultra Tour de la Ria</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- media="print" puis "all" : la police de la marque arrive sans retarder l'affichage (Arial en attendant) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;0,800;1,800&display=swap" media="print" onload="this.media='all'">
+<style>
+  :root { --bleu: #307BBF; --f2: #0C4270; --fond: #EEF2F6; --texte: #1B2430; --doux: #5B6675; --ligne: #C2CDD9; --erreur: #B3261E; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--fond); color: var(--texte); font: 16px/1.5 Inter, Arial, sans-serif; }
+  [hidden] { display: none !important; }
+
+  header { background: var(--f2); color: #fff; text-align: center; padding: 22px 16px 26px; }
+  header svg { width: 140px; height: auto; display: block; margin: 0 auto; fill: #fff; }
+  header svg .ria { fill: var(--bleu); }
+  h1 { margin: 14px 0 2px; font-size: 22px; line-height: 1.15; font-weight: 800; font-style: italic; text-transform: uppercase; }
+  header p { margin: 0; font-size: 15px; opacity: .85; }
+  main { max-width: 720px; margin: 0 auto; padding: 16px 16px 48px; }
+
+  .question { font-weight: 800; font-style: italic; text-transform: uppercase; font-size: 18px; margin: 8px 0 12px; }
+  .choix { display: grid; gap: 12px; }
+  .choix button { text-align: left; border: 0; border-left: 6px solid var(--bleu); border-radius: 10px; background: #fff; padding: 18px; font: inherit; color: inherit; box-shadow: 0 1px 3px rgba(12,66,112,.15); cursor: pointer; }
+  .choix strong { display: block; font-size: 19px; }
+  .choix span { color: var(--doux); font-size: 15px; }
+
+  .retour { background: none; border: 0; color: var(--bleu); font: inherit; font-weight: 600; padding: 8px 0; margin-bottom: 8px; cursor: pointer; }
+  .papier { background: #fff; border-radius: 6px; padding: 20px 18px 24px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .papier p, .papier li { font-size: 15px; }
+  .papier p:not([class]), .papier p.note, .papier li { text-align: justify; -webkit-hyphens: auto; hyphens: auto; hyphenate-limit-chars: 6 3 3; }
+  .entete { color: var(--doux); font-size: 13px !important; text-align: right; margin: 0 0 12px; }
+  .titre { text-align: center; font-weight: 800; font-size: 17px !important; line-height: 1.25; margin: 0; text-transform: uppercase; }
+  .sous-titre { text-align: center; color: var(--bleu); font-weight: 600; font-size: 14px !important; margin: 6px 0 14px; padding-bottom: 12px; border-bottom: 2px solid var(--bleu); }
+  h3 { font-size: 17px; margin: 24px 0 8px; }
+  h3 b { color: var(--bleu); }
+  .encart { border: 2px solid var(--bleu); background: #EAF2FA; border-radius: 6px; padding: 12px 14px; margin: 16px 0; }
+  .encart h4 { margin: 0 0 4px; color: var(--bleu); font-size: 15px; }
+  .encart p { margin: 8px 0 0; }
+  ul.rgpd { padding-left: 18px; }
+  ul.rgpd li { margin-bottom: 6px; }
+  .note { color: var(--doux); font-size: 14px !important; }
+  .pied-papier { color: var(--doux); font-size: 12px !important; text-align: center; margin: 24px 0 0; }
+
+  .champ { display: block; margin: 12px 0 0; font-weight: 600; font-size: 14px !important; }
+  .champ small { font-weight: 400; color: var(--doux); }
+  input[type=text], input[type=tel], input[type=email], input[type=date] { display: block; width: 100%; margin-top: 4px; padding: 11px 12px; min-height: 48px; font: inherit; font-size: 16px; color: inherit; background: #fff; border: 1.5px solid var(--ligne); border-radius: 8px; -webkit-appearance: none; appearance: none; }
+  input:focus { outline: 3px solid rgba(48,123,191,.35); border-color: var(--bleu); }
+  .deux { display: grid; gap: 0 12px; }
+  @media (min-width: 560px) { .deux { grid-template-columns: 1fr 1fr; } }
+  label.case { display: flex; gap: 12px; align-items: flex-start; padding: 12px; margin-top: 8px; background: #fff; border: 1.5px solid var(--ligne); border-radius: 8px; font-weight: 600; cursor: pointer; }
+  label.case input { width: 24px; height: 24px; margin: 0; flex: none; accent-color: var(--bleu); }
+  .radios { display: flex; gap: 8px; flex-wrap: wrap; }
+  .radios label.case { flex: 1 1 auto; margin-top: 4px; }
+  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  .bloc { border: 2px solid var(--bleu); border-radius: 6px; padding: 2px 14px 14px; margin-top: 16px; }
+  .bloc h4 { color: var(--bleu); margin: 10px 0 0; font-size: 16px; }
+
+  .signature canvas { display: block; width: 100%; height: 170px; margin-top: 4px; background: #fff; border: 2px dashed var(--bleu); border-radius: 8px; touch-action: none; }
+  .signature.erreur canvas { border: 2px solid var(--erreur); }
+  .signature.erreur .sig-pied span { color: var(--erreur); font-weight: 600; }
+  .sig-pied { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 14px; color: var(--doux); margin-top: 4px; }
+  .sig-pied button { background: #fff; border: 1.5px solid var(--ligne); border-radius: 8px; padding: 8px 14px; font: inherit; font-size: 14px; color: var(--texte); cursor: pointer; }
+
+  .envoyer { display: block; width: 100%; margin-top: 24px; padding: 16px; border: 0; border-radius: 10px; background: var(--bleu); color: #fff; font: inherit; font-size: 18px; font-weight: 800; font-style: italic; text-transform: uppercase; cursor: pointer; }
+  .envoyer:disabled { opacity: .6; }
+  #statut { margin: 12px 0 0; font-weight: 600; text-align: center; }
+  #statut.erreur { color: var(--erreur); }
+  /* Après un premier essai, les champs à revoir passent en rouge (utile là où le navigateur n'affiche pas de bulle) */
+  form.essaye input:invalid { border-color: var(--erreur); }
+  form.essaye input[type=checkbox]:invalid, form.essaye input[type=radio]:invalid { outline: 2px solid var(--erreur); outline-offset: 2px; }
+
+  .fin { background: #fff; border-radius: 10px; padding: 28px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .fin .ok { width: 64px; height: 64px; border-radius: 50%; background: var(--bleu); color: #fff; font-size: 34px; line-height: 64px; margin: 0 auto 12px; }
+  .fin h2 { font-weight: 800; font-style: italic; text-transform: uppercase; margin: 0 0 8px; }
+  .bouton2 { display: block; width: 100%; margin-top: 12px; padding: 14px; border-radius: 10px; border: 2px solid var(--bleu); background: #fff; color: var(--bleu); font: inherit; font-weight: 700; text-align: center; text-decoration: none; cursor: pointer; }
+</style>
+</head>
+<body>
+<header>
+  <svg viewBox="0 0 624.66 301.58" role="img" aria-label="Ultra Tour de la Ria"><path d="M74.04,0h20.04l-4.14,47.27c-.5,5.62-2.250,10.48-5.29,14.57-3.04,4.1-7.04,7.25-12.020,9.47-4.97,2.22-10.62,3.33-16.93,3.33s-11.84-1.11-16.43-3.33-8.03-5.38-10.33-9.47c-2.3-4.1-3.2-8.96-2.71-14.57L30.38,0h20.04l-3.99,45.54c-.2,2.28.13,4.32.98,6.11.85,1.79,2.13,3.19,3.830,4.19,1.7,1.01,3.7,1.51,5.97,1.51s4.39-.51,6.26-1.51c1.86-1.01,3.38-2.4,4.55-4.19s1.84-3.83,2.05-6.11L74.04,0Z"/><path d="M97.13,73.79L103.59,0h20.04l-5.04,57.64h29.83l-1.41,16.150h-49.87Z"/><path d="M158.08,16.15L159.49,0h64.13l-1.41,16.15h-22.19l-5.04,57.64h-19.75l5.04-57.64h-22.19Z"/><path d="M283.46,38.44c2.65-3.62,4.21-8.08,4.67-13.37.47-5.23-.29-9.72-2.24-13.47-1.95-3.75-4.89-6.62-8.830-8.61-3.92-1.98-8.63-2.99-14.1-2.99h-31.85l-6.45,73.78h20.03l2.13-24.36h6.94l10.82,24.37h21.76l-12.58-27.52c3.98-1.83,7.21-4.450,9.7-7.83ZM249.74,15.99h7.06c2.35,0,4.33.32,5.95.96,1.62.63,2.81,1.61,3.6,2.95.78,1.34,1.08,3.06.9,5.17-.19,2.09-.79,3.79-1.8,5.08-1.02,1.29-2.39,2.23-4.110,2.82-1.73.6-3.76.89-6.11.89h-7.05l1.56-17.87Z"/><path d="M348.12,0h-27.37l-30.82,73.79h21.61l5.51-14.13h24.32l3.03,14.13h21.63L348.12,0ZM322.88,44.68l9.49-24.35h.58l5.22,24.35h-15.29Z"/><path d="M146.09,106.26l1.41-16.15h64.13l-1.41,16.15h-22.19l-5.04,57.64h-19.75l5.04-57.64h-22.19Z"/><path d="M287.37,127.02c-.72,8.21-2.92,15.13-6.61,20.77-3.69,5.64-8.37,9.89-14.05,12.79-5.68,2.9-11.87,4.34-18.54,4.34s-12.66-1.46-17.83-4.38c-5.16-2.92-9.09-7.19-11.78-12.83-2.69-5.64-3.68-12.53-2.96-20.69.72-8.21,2.91-15.13,6.6-20.77,3.68-5.64,8.34-9.89,14.01-12.79,5.67-2.9,11.87-4.34,18.59-4.34s12.6,1.44,17.77,4.34c5.17,2.9,9.110,7.16,11.81,12.79,2.71,5.64,3.7,12.56,2.97,20.77h.01ZM266.76,127.02c.39-4.42.13-8.15-.77-11.19s-2.41-5.35-4.55-6.92c-2.13-1.57-4.85-2.36-8.17-2.36s-6.18.79-8.58,2.36-4.32,3.88-5.76,6.92c-1.43,3.04-2.34,6.77-2.73,11.19s-.13,8.15.77,11.19c.89,3.04,2.41,5.35,4.55,6.92,2.13,1.57,4.85,2.36,8.17,2.36s6.18-.79,8.58-2.36c2.4-1.57,4.32-3.88,5.76-6.92,1.43-3.04,2.34-6.77,2.73-11.19Z"/><path d="M343.48,90.13h20.04l-4.14,47.27c-.5,5.62-2.25,10.48-5.29,14.57s-7.04,7.25-12.02,9.47c-4.97,2.22-10.62,3.33-16.93,3.33s-11.84-1.11-16.43-3.33c-4.58-2.22-8.03-5.38-10.33-9.47-2.3-4.1-3.2-8.96-2.71-14.57l4.14-47.27h20.04l-3.99,45.54c-.2,2.28.13,4.32.98,6.11.85,1.79,2.13,3.19,3.83,4.19,1.7,1.01,3.7,1.51,5.970,1.51s4.39-.51,6.26-1.51c1.86-1.01,3.38-2.4,4.55-4.19,1.16-1.79,1.84-3.83,2.05-6.11l3.99-45.54h-.01Z"/><path d="M425.37,128.56c2.65-3.62,4.21-8.08,4.68-13.36.46-5.24-.29-9.72-2.25-13.47-1.95-3.75-4.89-6.62-8.82-8.61-3.93-1.99-8.64-2.99-14.11-2.99h-31.85l-6.46,73.77h20.04l2.13-24.35h6.93l10.83,24.37h21.76l-12.58-27.52c3.98-1.83,7.21-4.45,9.7-7.84ZM391.66,106.11h7.05c2.35,0,4.34.33,5.95.96,1.62.64,2.82,1.62,3.6,2.96.78,1.33,1.08,3.06.9,5.170-.18,2.09-.79,3.78-1.8,5.08-1.01,1.29-2.38,2.23-4.11,2.82-1.72.59-3.76.88-6.11.88h-7.04l1.56-17.87Z"/><path d="M35.35,253.63H7.11l6.42-73.38h27.95c7.54,0,13.95,1.47,19.2,4.39s9.13,7.12,11.65,12.61c2.52,5.49,3.44,12.04,2.77,19.69-.67,7.64-2.74,14.21-6.2,19.69-3.47,5.49-8.06,9.69-13.78,12.61-5.72,2.92-12.32,4.39-19.77,4.39h0ZM28.52,236.72h7.6c3.63,0,6.78-.58,9.45-1.76,2.67-1.17,4.81-3.19,6.4-6.06,1.6-2.87,2.62-6.85,3.07-11.96.44-5.11.11-9.1-1.01-11.96-1.12-2.87-2.95-4.88-5.49-6.06s-5.71-1.76-9.54-1.76h-7.03l-3.46,39.56h0Z"/><path d="M81.06,253.63l6.42-73.38h52.89l-1.4,16.05h-32.96l-1.1,12.61h30.24l-1.4,16.05h-30.24l-1.1,12.61h32.82l-1.4,16.05h-52.77Z"/><path d="M162.93,253.63l6.42-73.38h19.92l-5.01,57.33h29.66l-1.4,16.05h-49.59Z"/><path d="M275.98,180.25h-27.23l-30.64,73.38h21.5l5.47-14.04h24.2l3.01,14.04h21.49l-17.8-73.38ZM250.89,224.68l9.43-24.22h.57l5.19,24.22h-15.19Z"/><path class="ria" d="M407.98,242.55c4.42-6.02,7.02-13.43,7.79-22.21.76-8.71-.49-16.17-3.73-22.4-3.26-6.23-8.15-11-14.68-14.31-6.53-3.31-14.36-4.97-23.46-4.97h-52.93l-10.72,122.63h0s33.29.01,33.29.01l3.54-40.48h11.53l17.99,40.47h36.17l-20.9-45.7c6.620-3.05,11.99-7.4,16.12-13.04ZM351.94,205.26h11.74c3.91,0,7.21.53,9.89,1.58,2.68,1.070,4.68,2.7,5.98,4.92,1.31,2.21,1.81,5.08,1.5,8.59-.3,3.47-1.3,6.28-2.99,8.44-1.69,2.15-3.96,3.72-6.82,4.7-2.85.98-6.24,1.46-10.15,1.46h-11.75l2.6-29.69Z"/><path class="ria" d="M472.25,178.66l-10.72,122.63h-33.29l10.72-122.63h33.29Z"/><polygon points="285.3 301.29 0 301.29 2.09 277.4 287.38 277.4 285.3 301.29"/><polygon points="622.57 48.84 389.23 48.84 391.33 24.94 624.66 24.94 622.57 48.84"/><polygon points="614.72 138.96 458.67 138.96 460.76 115.07 616.81 115.07 614.72 138.96"/><path class="ria" d="M580.63,179.02h-45.48l-62.07,122.57h35.91c4.07-4.46,8.16-8.91,12.23-13.38,7.92-8.65,15.12-17.95,21.51-27.79,1.06-1.63,2.12-3.27,3.18-4.890.49,1.48.97,2.96,1.46,4.44,3.71,11.35,8.35,22.37,13.9,32.96,1.45,2.77,2.9,5.53,4.35,8.3,11.28.12,22.57.24,33.85.34l-18.85-122.57h0ZM536.02,258.77c-8.07-1.24-16.16-2.48-24.23-3.72-3.59-.56-4.04-5.55-.61-6.75,8.16-2.85,15.66-6.56,23.82-9.41l9.23,9.84-8.19,10.03h-.01ZM538.75,230.56c3.23-8.39,6.46-16.78,9.69-25.17,1.37-3.52,6.53-2.89,6.99.86,1.02,8.44,2.04,16.88,3.06,25.32l-10.94,10.17-8.81-11.18h0ZM581.85,255.3c-8.07,1.24-16.16,2.48-24.23,3.72l-8.05-10.41,9.97-8.72c8.16,2.85,14.77,5.82,22.92,8.67,3.43,1.21,2.97,6.19-.61,6.75h0Z"/></svg>
+  <h1>Autorisation droit à l'image</h1>
+  <p>Shooting du 14 &amp; 15 novembre 2026 · <span style="white-space: nowrap">Locoal-Mendon</span></p>
+</header>
+
+<main>
+  <section id="ecran-choix">
+    <p class="question">Qui est pris en photo ?</p>
+    <div class="choix">
+      <button type="button" data-type="Majeur"><strong>J'ai 18 ans ou plus</strong><span>Je lis, je remplis &amp; je signe pour moi.</span></button>
+      <button type="button" data-type="Mineur"><strong>Mon enfant a moins de 18 ans</strong><span>Un parent lit, remplit &amp; signe pour lui.</span></button>
+    </div>
+  </section>
+
+  <form id="doc" hidden novalidate>
+    <button type="button" class="retour" id="changer">← Changer de formulaire</button>
+    <div class="papier">
+      <p class="entete">Autorisation droit à l'image — Personne <span class="libelle-age"></span></p>
+      <p class="titre">Autorisation de captation et d'utilisation de l'image et de la voix</p>
+      <p class="sous-titre">Séances photo et vidéo — Communication de l'Ultra Tour de la Ria</p>
+
+      <p>L'association <b>Ultra Trail de la Ria</b>, association régie par la loi du 1<sup>er</sup> juillet 1901, déclarée sous le numéro RNA W561014176, SIREN 100 445 485, dont le siège est situé 11 rue de l'Éolienne, 56510 Saint-Pierre-Quiberon, représentée par son Président, M. Maxence Collin (ci-après «&nbsp;<b>l'Association</b>&nbsp;»), organise des séances de prise de vues destinées à la communication de l'Ultra Tour de la Ria.</p>
+      <p>Le droit à l'image des personnes photographiées est protégé par l'article 9 du code civil, et une image permettant d'identifier une personne constitue une donnée personnelle au sens du règlement (UE) 2016/679 (RGPD). La présente autorisation encadre donc à la fois l'utilisation de l'image et le traitement des données qui en résulte.</p>
+
+      <div class="encart">
+        <h4>Séance concernée</h4>
+        Date(s) :
+        <label class="case"><input type="checkbox" name="sam"> Samedi 14 novembre 2026</label>
+        <label class="case"><input type="checkbox" name="dim"> Dimanche 15 novembre 2026</label>
+        <p>Lieu : Locoal-Mendon</p>
+        <p>Photographe(s) / vidéaste(s) : GUILLO Arzhel, LINO Esteban</p>
+      </div>
+
+      <h3><b>1.</b> Personne photographiée ou filmée</h3>
+      <div class="deux">
+        <label class="champ">Nom<input type="text" name="nom" required autocomplete="family-name"></label>
+        <label class="champ">Prénom<input type="text" name="prenom" required autocomplete="given-name"></label>
+        <label class="champ">Date de naissance<input type="date" name="naissance" required></label>
+        <label class="champ">Téléphone <small data-pour="Mineur">(facultatif)</small><input type="tel" name="tel" autocomplete="tel"></label>
+      </div>
+      <label class="champ">E-mail <small data-pour="Mineur">(facultatif)</small><input type="email" name="email" autocomplete="email"></label>
+      <p class="note" data-pour="Mineur">La personne photographiée étant mineure, l'autorisation est signée par ses représentants légaux (partie 8).</p>
+
+      <h3><b>2.</b> Objet de l'autorisation</h3>
+      <p>J'autorise l'Association, ainsi que les photographes et vidéastes intervenant pour son compte, à me photographier et à me filmer lors de la séance mentionnée ci-dessus, puis à reproduire et à diffuser, en tout ou partie, les photographies, vidéos et enregistrements de ma voix et de mes propos ainsi réalisés, dans les conditions définies ci-après.</p>
+      <p>Les images peuvent faire l'objet de recadrages, de retouches colorimétriques et de montages, à condition de ne pas dénaturer mon image et de respecter l'engagement prévu à l'article 6.</p>
+
+      <h3><b>3.</b> Supports autorisés</h3>
+      <label class="case"><input type="checkbox" name="supports" required> <span>J'autorise la diffusion de mon image sur tous les supports de communication de l'Association, numériques et imprimés.</span></label>
+
+      <h3><b>4.</b> Finalité et absence d'usage commercial</h3>
+      <p>Les images sont utilisées exclusivement pour la communication et la promotion de l'Association et de ses événements. Elles ne font l'objet d'aucune exploitation commerciale : l'Association s'interdit de les vendre ou de les céder à des tiers à des fins publicitaires. Toute reprise par un partenaire ou un sponsor pour sa propre communication nécessite une autorisation écrite distincte de ma part.</p>
+
+      <h3><b>5.</b> Durée, territoire et gratuité</h3>
+      <p>La présente autorisation est consentie pour une durée de <b>cinq (5) ans</b> à compter de sa signature, pour le <b>monde entier</b>, la diffusion sur Internet étant par nature mondiale. Au terme de cette durée, l'Association cesse toute nouvelle diffusion ; les publications antérieures peuvent demeurer consultables dans les archives des supports concernés, sous réserve de mon droit de retrait prévu à l'article 7.</p>
+      <p>Elle est consentie <b>à titre gratuit</b> : je ne percevrai aucune rémunération ni contrepartie, quelle que soit l'utilisation faite des images.</p>
+
+      <h3><b>6.</b> Respect de la personne</h3>
+      <p>L'Association s'engage à ne faire aucune utilisation des images susceptible de porter atteinte à ma dignité, à ma vie privée ou à ma réputation, notamment par des légendes, commentaires ou montages dévalorisants. Mon nom de famille n'est associé aux images qu'avec mon accord.</p>
+
+      <h3><b>7.</b> Données personnelles (RGPD)</h3>
+      <ul class="rgpd">
+        <li><b>Responsable du traitement :</b> l'association Ultra Trail de la Ria, 11 rue de l'Éolienne, 56510 Saint-Pierre-Quiberon.</li>
+        <li><b>Finalité :</b> communication et promotion de l'Association et de ses événements.</li>
+        <li><b>Base légale :</b> mon consentement (article 6.1.a du RGPD).</li>
+        <li><b>Destinataires :</b> les membres du bureau chargés de la communication et les prestataires qui réalisent ou traitent les images (photographes, vidéastes, monteurs), tenus à la confidentialité.</li>
+        <li><b>Durée de conservation :</b> celle de l'autorisation (cinq ans) ; les fichiers sources sont ensuite supprimés.</li>
+        <li><b>Mes droits :</b> je dispose d'un droit d'accès, de rectification, d'effacement, de limitation et d'opposition. Je peux retirer mon consentement à tout moment, sans avoir à me justifier, en écrivant à <b>marinlagoutte@ultratourdelaria.fr</b></li>
+        <li><b>Effet du retrait :</b> l'Association retire les images me concernant de ses supports numériques dans un délai d'un mois et cesse toute nouvelle utilisation. Le retrait ne remet pas en cause les utilisations antérieures, et les supports imprimés déjà diffusés ne sont pas rappelés.</li>
+        <li><b>Réclamation :</b> je peux saisir la CNIL (www.cnil.fr) si j'estime que mes droits ne sont pas respectés.</li>
+      </ul>
+
+      <fieldset data-pour="Majeur">
+        <h3><b>8.</b> Signature — personne majeure</h3>
+        <p>Fait à Locoal-Mendon, le <span class="aujourdhui"></span>.</p>
+        <p class="champ">Signature de la personne photographiée :</p>
+        <div class="signature" data-sig="sig" data-requise></div>
+      </fieldset>
+
+      <fieldset data-pour="Mineur">
+        <h3><b>8.</b> Personne mineure — autorisation des représentants légaux</h3>
+        <p>La signature des deux titulaires de l'autorité parentale est recommandée ; à défaut, la signature de l'un d'eux suffit pour cette autorisation, qui relève des actes usuels de l'autorité parentale.</p>
+        <p>Agissant en qualité de représentant(s) légal(aux) de l'enfant identifié à l'article 1, j'autorise / nous autorisons l'Association à capter et à utiliser son image et sa voix dans les conditions définies aux articles 2 à 7, pour les supports prévus à l'article 3.</p>
+        <p>Fait à Locoal-Mendon, le <span class="aujourdhui"></span>.</p>
+
+        <div class="bloc">
+          <h4>Représentant légal 1</h4>
+          <label class="champ">Nom, prénom<input type="text" name="r1_nom" required autocomplete="name"></label>
+          <p class="champ">Qualité</p>
+          <div class="radios">
+            <label class="case"><input type="radio" name="r1_qualite" value="Mère" required> Mère</label>
+            <label class="case"><input type="radio" name="r1_qualite" value="Père"> Père</label>
+            <label class="case"><input type="radio" name="r1_qualite" value="Tuteur"> Tuteur</label>
+          </div>
+          <label class="champ">Téléphone<input type="tel" name="r1_tel" required autocomplete="tel"></label>
+          <label class="champ">E-mail<input type="email" name="r1_email" required autocomplete="email"></label>
+          <p class="champ">Signature :</p>
+          <div class="signature" data-sig="sig_r1" data-requise></div>
+        </div>
+
+        <label class="case"><input type="checkbox" name="r2" data-ouvre="r2"> Ajouter le représentant légal 2 (recommandé)</label>
+        <fieldset id="r2" hidden disabled>
+          <div class="bloc">
+            <h4>Représentant légal 2</h4>
+            <label class="champ">Nom, prénom<input type="text" name="r2_nom" required></label>
+            <p class="champ">Qualité</p>
+            <div class="radios">
+              <label class="case"><input type="radio" name="r2_qualite" value="Mère" required> Mère</label>
+              <label class="case"><input type="radio" name="r2_qualite" value="Père"> Père</label>
+              <label class="case"><input type="radio" name="r2_qualite" value="Tuteur"> Tuteur</label>
+            </div>
+            <label class="champ">Téléphone<input type="tel" name="r2_tel" required></label>
+            <label class="champ">E-mail<input type="email" name="r2_email" required></label>
+            <p class="champ">Signature :</p>
+            <div class="signature" data-sig="sig_r2" data-requise></div>
+          </div>
+        </fieldset>
+
+        <div class="bloc">
+          <h4>Signature de l'enfant (recommandée)</h4>
+          <p class="note">Les parents associent l'enfant aux décisions qui le concernent, selon son âge et sa maturité. Sa signature, ou une mention de son accord, témoigne qu'il a été informé de l'utilisation de ses images.</p>
+          <!-- Cadre affiché seulement sur demande : un pouce posé dessus en faisant défiler y laisserait une fausse signature -->
+          <label class="case"><input type="checkbox" name="enfant" data-ouvre="zone-enfant"> L'enfant signe aussi</label>
+          <fieldset id="zone-enfant" hidden disabled>
+            <p class="champ">Signature de l'enfant :</p>
+            <div class="signature" data-sig="sig_enfant" data-requise></div>
+          </fieldset>
+        </div>
+      </fieldset>
+
+      <p class="pied-papier">Association Ultra Trail de la Ria — RNA W561014176 — 11 rue de l'Éolienne, 56510 Saint-Pierre-Quiberon</p>
+    </div>
+
+    <button type="submit" class="envoyer">Enregistrer l'autorisation</button>
+    <p id="statut" role="status" aria-live="polite"></p>
+  </form>
+
+  <section id="ecran-fin" class="fin" hidden>
+    <div class="ok" aria-hidden="true">✓</div>
+    <h2>C'est enregistré !</h2>
+    <p>Merci <span id="fin-prenom"></span>, l'autorisation est bien arrivée chez l'Ultra Tour de la Ria.</p>
+    <a class="bouton2" id="copie" download>Télécharger ma copie (PDF)</a>
+    <button type="button" class="bouton2" id="encore">Remplir une autre autorisation</button>
+  </section>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const form = $('#doc');
+// Le script Google (Code.gs) qui range le PDF dans le Drive. En local : le faux Drive du serveur de test.
+const API = location.hostname === 'localhost' ? '/api' : 'https://script.google.com/macros/s/AKfycbzlacItXmW96mSe-ifeRUpNYkgTsX8a9wOwdhNzLiX0eVBrB6-4-zwKOubPfgPHoQicQg/exec';
+let type = null;
+
+// --- Fichiers lourds : chargés en arrière-plan pour ne pas retarder l'affichage, redemandés à l'enregistrement s'ils ont échoué ---
+let outil;
+const pdfLib = () => outil || (outil = new Promise((ok, ko) => {
+  const s = document.createElement('script');
+  s.src = 'pdf-lib.min.js';
+  s.onerror = () => { outil = null; s.remove(); ko(new Error('pdf-lib introuvable')); };
+  s.onload = () => window.PDFLib ? ok(window.PDFLib) : s.onerror();
+  document.head.appendChild(s);
+}));
+pdfLib().catch(() => {});
+const modeles = {};
+const modele = t => modeles[t] || (modeles[t] = fetch(t + '.pdf')
+  .then(r => { if (!r.ok) throw new Error('modèle ' + r.status); return r.arrayBuffer(); })
+  .catch(e => { delete modeles[t]; throw e; }));
+const delai = (promesse, ms) => Promise.race([promesse, new Promise((_, ko) => setTimeout(() => ko(new Error('délai dépassé')), ms))]);
+
+// --- Date du jour ---
+const auj = new Date();
+const jj = String(auj.getDate()).padStart(2, '0'), mm = String(auj.getMonth() + 1).padStart(2, '0'), aaaa = String(auj.getFullYear());
+document.querySelectorAll('.aujourdhui').forEach(el => el.textContent = `${jj}/${mm}/${aaaa}`);
+const cocherJour = () => { form.sam.checked = `${aaaa}-${mm}-${jj}` === '2026-11-14'; form.dim.checked = `${aaaa}-${mm}-${jj}` === '2026-11-15'; };
+cocherJour();
+
+function age(iso) {
+  const [a, m, j] = iso.split('-').map(Number);
+  return auj.getFullYear() - a - ((auj.getMonth() + 1 < m || (auj.getMonth() + 1 === m && auj.getDate() < j)) ? 1 : 0);
+}
+form.naissance.max = `${aaaa}-${mm}-${jj}`;
+
+// --- Cadres de signature au doigt ---
+const pads = [...document.querySelectorAll('.signature')].map(el => {
+  el.innerHTML = '<canvas aria-label="Zone de signature"></canvas><div class="sig-pied"><span>Signe avec ton doigt dans le cadre</span><button type="button">Effacer</button></div>';
+  const c = el.querySelector('canvas'), ctx = c.getContext('2d'), traits = [];
+  let trait = null, doigt = null;
+  const style = g => { g.lineWidth = 2.5; g.lineCap = g.lineJoin = 'round'; g.strokeStyle = '#0D2A6B'; };
+  const tracer = (g, t) => { g.beginPath(); g.moveTo(t[0].x, t[0].y); t.forEach(p => g.lineTo(p.x, p.y)); if (t.length === 1) g.lineTo(t[0].x + .1, t[0].y); g.stroke(); };
+  const redessiner = () => {
+    const r = window.devicePixelRatio || 1;
+    if (!c.clientWidth) return;
+    c.width = c.clientWidth * r; c.height = c.clientHeight * r;
+    ctx.setTransform(r, 0, 0, r, 0, 0); style(ctx); traits.forEach(t => tracer(ctx, t));
+  };
+  new ResizeObserver(redessiner).observe(c);
+  // Le point reste dans le cadre : ce qui part dans le PDF est exactement ce que la personne a vu
+  const pos = e => { const b = c.getBoundingClientRect(); return { x: Math.min(Math.max(e.clientX - b.left, 0), b.width), y: Math.min(Math.max(e.clientY - b.top, 0), b.height) }; };
+  c.addEventListener('pointerdown', e => {
+    if (doigt !== null && !e.isPrimary) return; // un seul doigt trace : la paume ou un 2e doigt sont ignorés
+    doigt = e.pointerId;
+    c.setPointerCapture(doigt); el.classList.remove('erreur');
+    trait = [pos(e)]; traits.push(trait); tracer(ctx, trait);
+  });
+  c.addEventListener('pointermove', e => {
+    if (e.pointerId !== doigt) return;
+    const p = pos(e), q = trait[trait.length - 1];
+    trait.push(p); ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+  });
+  ['pointerup', 'pointercancel'].forEach(n => c.addEventListener(n, e => { if (e.pointerId === doigt) doigt = trait = null; }));
+  const effacer = () => { traits.length = 0; ctx.clearRect(0, 0, c.width, c.height); };
+  el.querySelector('button').onclick = effacer;
+  const boite = () => traits.flat().reduce((b, p) => ({ x0: Math.min(b.x0, p.x), x1: Math.max(b.x1, p.x), y0: Math.min(b.y0, p.y), y1: Math.max(b.y1, p.y) }),
+    { x0: Infinity, x1: -Infinity, y0: Infinity, y1: -Infinity });
+  return {
+    el, effacer, nom: el.dataset.sig,
+    // Un point ou une marque minuscule (doigt posé par mégarde) n'est pas une signature
+    vide: () => { const b = boite(); return !(Math.max(b.x1 - b.x0, b.y1 - b.y0) >= 12); },
+    requise: () => el.hasAttribute('data-requise') && !el.closest('fieldset:disabled'),
+    // Image recadrée sur le tracé, pour qu'elle remplisse bien le cadre du PDF
+    png() {
+      const m = 4, b = boite(), x0 = b.x0 - m, y0 = b.y0 - m, w = b.x1 - b.x0 + 2 * m, h = b.y1 - b.y0 + 2 * m;
+      const s = 3, o = document.createElement('canvas'), g = o.getContext('2d');
+      o.width = w * s; o.height = h * s;
+      g.setTransform(s, 0, 0, s, -x0 * s, -y0 * s); style(g); traits.forEach(t => tracer(g, t));
+      return { url: o.toDataURL('image/png'), w, h };
+    },
+  };
+});
+
+// --- Navigation ---
+function choisir(t) {
+  type = t;
+  document.querySelectorAll('[data-pour]').forEach(el => {
+    el.hidden = el.dataset.pour !== t;
+    if (el.tagName === 'FIELDSET') el.disabled = el.hidden;
+  });
+  $('.libelle-age').textContent = t === 'Majeur' ? 'majeure' : 'mineure';
+  form.tel.required = form.email.required = t === 'Majeur';
+  $('#ecran-choix').hidden = true; $('#ecran-fin').hidden = true; form.hidden = false;
+  statut('');
+  modele(t).catch(() => {}); // le PDF vierge se charge pendant la lecture
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('.choix button').forEach(b => b.onclick = () => choisir(b.dataset.type));
+$('#changer').onclick = () => { form.hidden = true; $('#ecran-choix').hidden = false; window.scrollTo(0, 0); };
+// Cases qui ouvrent une partie facultative : parent 2, signature de l'enfant
+const ouvrir = c => { const zone = $('#' + c.dataset.ouvre); zone.hidden = zone.disabled = !c.checked; };
+document.querySelectorAll('[data-ouvre]').forEach(c => c.onchange = () => ouvrir(c));
+$('#encore').onclick = () => {
+  form.reset(); pads.forEach(p => p.effacer()); cocherJour();
+  document.querySelectorAll('[data-ouvre]').forEach(c => ouvrir(c));
+  form.classList.remove('essaye');
+  $('#ecran-fin').hidden = true; $('#ecran-choix').hidden = false; window.scrollTo(0, 0);
+};
+
+function statut(msg, erreur) { const s = $('#statut'); s.textContent = msg; s.classList.toggle('erreur', !!erreur); }
+
+// --- Contrôle avant enregistrement ---
+function regles() {
+  form.sam.setCustomValidity(form.sam.checked || form.dim.checked ? '' : 'Coche au moins un jour de séance.');
+  form.supports.setCustomValidity(form.supports.checked ? '' : 'Coche cette case pour donner ton autorisation.');
+  const v = form.naissance.value, a = v ? age(v) : null;
+  form.naissance.setCustomValidity(
+    a !== null && type === 'Majeur' && a < 18 ? 'Moins de 18 ans : reviens en arrière et choisis « Mon enfant a moins de 18 ans ».' :
+    a !== null && type === 'Mineur' && a >= 18 ? '18 ans ou plus : reviens en arrière et choisis « J\'ai 18 ans ou plus ».' : '');
+}
+form.addEventListener('change', regles); // le rouge disparaît dès que la personne corrige
+
+// Ce qui cloche dans un champ, écrit en clair sous le bouton : certains navigateurs n'affichent pas leur propre bulle
+function manque(champ) {
+  if (champ.validity.customError) return champ.validationMessage;
+  const nom = champ.type === 'radio' ? 'Qualité' : champ.closest('label').firstChild.textContent.trim();
+  return (champ.validity.valueMissing ? 'Il manque : ' : 'À corriger : ') + nom + '.';
+}
+
+function verifier() {
+  form.classList.add('essaye');
+  form.querySelectorAll('input[type=text], input[type=tel], input[type=email]').forEach(i => i.value = i.value.trim());
+  regles();
+  const faux = form.querySelector('input:invalid');
+  if (faux) {
+    form.reportValidity();
+    faux.scrollIntoView({ block: 'center' });
+    statut(manque(faux), true);
+    return false;
+  }
+  const sans = pads.find(p => p.requise() && p.vide());
+  if (sans) {
+    sans.el.classList.add('erreur');
+    sans.el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    statut('Il manque une signature.', true);
+    return false;
+  }
+  return true;
+}
+
+// --- Remplissage du PDF vierge (positions relevées le 12/11/2026 dans site/Majeur.pdf et site/Mineur.pdf) ---
+// shortcut: positions fixes ; si la mise en page des PDF change, les relever à nouveau.
+const POS = {
+  Majeur: { d: 0, sam: [110.5, 547.3], dim: [260.3, 547.3], supports: [70.5, 228.5], date: 360.6,
+    sig: { x: 62, y: 265, w: 470, h: 63 } },
+  Mineur: { d: 10, sam: [110.5, 557.4], dim: [260.3, 557.4], supports: [70.5, 221.5], date: 292.4,
+    r: [{ dx: 0, sig: { x: 62, y: 153, w: 228, h: 36 } }, { dx: 246.9, sig: { x: 309, y: 153, w: 228, h: 36 } }],
+    enfant: { x: 155, y: 50, w: 380, h: 44 } },
+};
+// Helvetica du PDF ne connaît que l'alphabet latin « Windows » : on retire les accents inconnus, sinon « ? ».
+const WINANSI = /[\u0020-\u007E\u00A0-\u00FF\u0152\u0153\u0160\u0161\u0178\u017D\u017E\u2013\u2014\u2018\u2019\u201C\u201D\u2026\u20AC]/;
+const SANS_ACCENT = { 'Ł': 'L', 'ł': 'l', 'Đ': 'D', 'đ': 'd', 'ı': 'i', 'Ħ': 'H', 'ħ': 'h' }; // lettres que NFD ne décompose pas
+const latin = s => [...String(s || '').normalize('NFC')].map(ch => WINANSI.test(ch) ? ch :
+  [...(SANS_ACCENT[ch] || ch.normalize('NFD').replace(/[\u0300-\u036F]/g, ''))].map(c => WINANSI.test(c) ? c : '?').join('')).join('');
+
+async function remplir(v) {
+  const [{ PDFDocument, StandardFonts, rgb }, vierge] = await Promise.all([pdfLib(), modele(type)]);
+  const doc = await PDFDocument.load(vierge);
+  const police = await doc.embedFont(StandardFonts.Helvetica);
+  const encre = rgb(0.05, 0.16, 0.42);
+  const [p1, p2] = doc.getPages();
+  const P = POS[type], d = P.d;
+  const ecrire = (page, s, x, y, w, taille = 10) => {
+    s = latin(s).trim();
+    while (taille > 6 && police.widthOfTextAtSize(s, taille) > w) taille -= .5;
+    while (s && police.widthOfTextAtSize(s, taille) > w) s = s.slice(0, -1);
+    page.drawText(s, { x, y, size: taille, font: police, color: encre });
+  };
+  const centrer = (page, s, cx, y) => page.drawText(s, { x: cx - police.widthOfTextAtSize(s, 10) / 2, y, size: 10, font: police, color: encre });
+  const croix = (page, [x, y], r = 3.2) => {
+    page.drawLine({ start: { x: x - r, y: y - r }, end: { x: x + r, y: y + r }, thickness: 1.4, color: encre });
+    page.drawLine({ start: { x: x - r, y: y + r }, end: { x: x + r, y: y - r }, thickness: 1.4, color: encre });
+  };
+  const signer = async (page, nom, z) => {
+    const s = pads.find(p => p.nom === nom).png(), img = await doc.embedPng(s.url);
+    const k = Math.min(z.w / s.w, z.h / s.h, 1.5);
+    page.drawImage(img, { x: z.x + (z.w - s.w * k) / 2, y: z.y + (z.h - s.h * k) / 2, width: s.w * k, height: s.h * k });
+  };
+
+  if (v.sam) croix(p1, P.sam);
+  if (v.dim) croix(p1, P.dim);
+  croix(p1, P.supports);
+  ecrire(p1, v.nom, 152, 449.6 + d, 140);
+  ecrire(p1, v.prenom, 374, 449.6 + d, 168);
+  ecrire(p1, v.naissance.split('-').reverse().join('/'), 152, 430.1 + d, 140);
+  ecrire(p1, v.tel, 374, 430.1 + d, 168);
+  ecrire(p1, v.email, 152, 391.1 + d, 390);
+
+  centrer(p2, jj, 189.7, P.date); centrer(p2, mm, 220, P.date); centrer(p2, aaaa, 261.6, P.date);
+
+  if (type === 'Majeur') {
+    await signer(p2, 'sig', P.sig);
+  } else {
+    for (const [i, r] of P.r.entries()) {
+      const n = `r${i + 1}_`;
+      if (i === 1 && !v.r2) continue;
+      ecrire(p2, v[n + 'nom'], 125 + r.dx, 252.9, 158, 9);
+      croix(p2, [{ 'Mère': 104.4, 'Père': 144.9, 'Tuteur': 183.7 }[v[n + 'qualite']] + r.dx, 239.2], 2.6);
+      ecrire(p2, v[n + 'tel'], 112 + r.dx, 222.4, 168, 9);
+      ecrire(p2, v[n + 'email'], 94 + r.dx, 207.9, 186, 9);
+      await signer(p2, `sig_r${i + 1}`, r.sig);
+    }
+    if (v.enfant) await signer(p2, 'sig_enfant', P.enfant);
+  }
+  return doc.saveAsBase64();
+}
+
+// --- Enregistrement ---
+async function envoyer(d) {
+  const coupure = new AbortController(), minuteur = setTimeout(() => coupure.abort(), 90000); // réseau figé : on rend la main
+  try {
+    // Corps en texte simple : la requête part sans vérification préalable (CORS) et sans compte Google
+    const r = await (await fetch(API, { method: 'POST', body: JSON.stringify(d), signal: coupure.signal })).json();
+    if (!r.ok) throw Object.assign(new Error(r.erreur), { refus: true });
+    return r.nom;
+  } finally {
+    clearTimeout(minuteur);
+  }
+}
+
+function fin(prenom, nom, pdf) {
+  const copie = $('#copie');
+  try { // la copie est un plus : si le téléphone ne sait pas la fabriquer, l'enregistrement reste acquis
+    URL.revokeObjectURL(copie.href);
+    copie.href = URL.createObjectURL(new Blob([Uint8Array.from(atob(pdf), ch => ch.charCodeAt(0))], { type: 'application/pdf' }));
+    copie.download = nom;
+    copie.hidden = false;
+  } catch (err) {
+    copie.hidden = true;
+  }
+  $('#fin-prenom').textContent = prenom;
+  form.hidden = true; $('#ecran-fin').hidden = false; window.scrollTo(0, 0);
+  statut('');
+}
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!verifier()) return;
+  const bouton = form.querySelector('.envoyer');
+  bouton.disabled = true;
+  let pret = false;
+  try {
+    statut('Création du document…');
+    const v = Object.fromEntries(new FormData(form));
+    const pdf = await delai(remplir(v), 60000);
+    pret = true;
+    statut('Envoi…');
+    fin(v.prenom, await envoyer({ type, nom: v.nom, prenom: v.prenom, pdf }), pdf);
+  } catch (err) {
+    console.error(err);
+    statut(err.refus ? "Enregistrement refusé. Préviens l'équipe UTR." :
+      pret ? "Ça n'est pas parti (réseau ?). Tout reste rempli : réessaie dans un instant." :
+      'Connexion trop faible pour préparer le document. Tout reste rempli : réessaie dans un instant.', true);
+  } finally {
+    bouton.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
